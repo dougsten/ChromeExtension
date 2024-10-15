@@ -1,7 +1,11 @@
-// Refactor the code so that it uses .addEventListener()
-// when you click the SAVE INPUT button
+// Create two variables:
+// myLeads -> should be assigned to an empty array
+// inputEl -> should be assigned to the text input field
 
-let inputBtnEl = document.getElementById("input-btn");
-inputBtnEl.addEventListener("click", function () {
+let inputBtn = document.getElementById("input-btn");
+let myLeads = [];
+let inputEl = document.getElementById("input-el");
+
+inputBtn.addEventListener("click", function () {
   console.log("Button clicked!");
 });
