@@ -1,5 +1,7 @@
-// Log out "Button clicked!" when the user clicks the "SAVE INPUT" button
+// Refactor the code so that it uses .addEventListener()
+// when you click the SAVE INPUT button
 
-function saveInput() {
-  console.log("Button Clicked");
-}
+let inputBtnEl = document.getElementById("input-btn");
+inputBtnEl.addEventListener("click", function () {
+  console.log("Button clicked!");
+});
