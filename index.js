@@ -16,7 +16,7 @@ if (leadsFromLocalStorage) {
 }
 
 inputBtn.addEventListener("click", function () {
-  if ((inputEl.value != "")) {
+  if (inputEl.value != "") {
     myLeads.push(inputEl.value);
     inputEl.value = "";
     localStorage.setItem("myLeads", JSON.stringify(myLeads));
@@ -28,8 +28,6 @@ clearBtn.addEventListener("click", function () {
   myLeads = [];
   localStorage.clear();
   inputEl.value = "";
-  // localStorage.setItem("myLeads", JSON.stringify(myLeads));
-  // renderLeads();
 });
 
 function renderLeads() {
