@@ -9,25 +9,27 @@ let leadsFromLocalStorage = JSON.parse(localStorage.getItem("myLeads"));
 
 // 1. Check if leadsFromLocalStorage is truthy
 // 2. If so, set myLeads to its value and call renderLeads()
-  if (leadsFromLocalStorage){
-    console.log(leadsFromLocalStorage);
-    myLeads = leadsFromLocalStorage;
-    renderLeads();
-  }
+if (leadsFromLocalStorage) {
+  console.log(leadsFromLocalStorage);
+  myLeads = leadsFromLocalStorage;
+  renderLeads();
+}
 
 inputBtn.addEventListener("click", function () {
-  myLeads.push(inputEl.value);
-  inputEl.value = "";
-  localStorage.setItem("myLeads", JSON.stringify(myLeads));
-  renderLeads();
+  if ((inputEl.value != "")) {
+    myLeads.push(inputEl.value);
+    inputEl.value = "";
+    localStorage.setItem("myLeads", JSON.stringify(myLeads));
+    renderLeads();
+  }
 });
 
 clearBtn.addEventListener("click", function () {
   myLeads = [];
   localStorage.clear();
   inputEl.value = "";
-  localStorage.setItem("myLeads", JSON.stringify(myLeads));
-  renderLeads();
+  // localStorage.setItem("myLeads", JSON.stringify(myLeads));
+  // renderLeads();
 });
 
 function renderLeads() {
