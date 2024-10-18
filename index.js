@@ -3,16 +3,38 @@ const inputEl = document.getElementById("input-el");
 const inputBtn = document.getElementById("input-btn");
 const ulEl = document.getElementById("ul-el");
 const clearBtn = document.getElementById("clear-btn");
+const leadsFromLocalStorage = JSON.parse(localStorage.getItem("myLeads"));
 
-// ["lead1", "lead2"] or null
-let leadsFromLocalStorage = JSON.parse(localStorage.getItem("myLeads"));
+// 1. Grab the SAVE TAB button and store it in a tabBtn variable
+const tabBtn = document.getElementById("tab-btn")
 
-// 1. Check if leadsFromLocalStorage is truthy
-// 2. If so, set myLeads to its value and call renderLeads()
 if (leadsFromLocalStorage) {
   console.log(leadsFromLocalStorage);
   myLeads = leadsFromLocalStorage;
-  renderLeads();
+  render(myLeads);
+}
+
+const tabs = [
+  { url: "https://www.linkedin.com/in/per-harald-borgen/" }
+];
+
+// 2. Listen for clicks on tabBtn. Log Per's LinkedIn URL to the console
+tabBtn.addEventListener("click", function(){
+    console.log(tabs[0].url)
+})
+
+function render(leads) {
+  let listItems = "";
+  for (let i = 0; i < leads.length; i++) {
+    listItems += `
+            <li>
+                <a target='_blank' href='${leads[i]}'>
+                    ${leads[i]}
+                </a>
+            </li>
+        `;
+  }
+  ulEl.innerHTML = listItems;
 }
 
 inputBtn.addEventListener("click", function () {
@@ -20,7 +42,7 @@ inputBtn.addEventListener("click", function () {
     myLeads.push(inputEl.value);
     inputEl.value = "";
     localStorage.setItem("myLeads", JSON.stringify(myLeads));
-    renderLeads();
+    render(myLeads);
   }
 });
 
@@ -28,18 +50,7 @@ clearBtn.addEventListener("click", function () {
   myLeads = [];
   localStorage.clear();
   inputEl.value = "";
+  localStorage.setItem("myLeads", JSON.stringify(myLeads));
+  render(myLeads);
 });
 
-function renderLeads() {
-  let listItems = "";
-  for (let i = 0; i < myLeads.length; i++) {
-    listItems += `
-            <li>
-                <a target='_blank' href='${myLeads[i]}'>
-                    ${myLeads[i]}
-                </a>
-            </li>
-        `;
-  }
-  ulEl.innerHTML = listItems;
-}
