@@ -1,27 +1,22 @@
-let myLeads = [];
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
+import {
+  getDatabase,
+  ref,
+  push,
+} from "https://www.gstatic.com/firebasejs/10.8.1/firebase-database.js";
+
+const firebaseConfig = {
+  databaseURL: process.env.DATABASE_URL
+};
+
+const app = initializeApp(firebaseConfig);
+const database = getDatabase(app);
+const referenceInDB = ref(database, "leads");
+
 const inputEl = document.getElementById("input-el");
 const inputBtn = document.getElementById("input-btn");
 const ulEl = document.getElementById("ul-el");
-const clearBtn = document.getElementById("clear-btn");
-const leadsFromLocalStorage = JSON.parse(localStorage.getItem("myLeads"));
-
-// 1. Grab the SAVE TAB button and store it in a tabBtn variable
-const tabBtn = document.getElementById("tab-btn")
-
-if (leadsFromLocalStorage) {
-  console.log(leadsFromLocalStorage);
-  myLeads = leadsFromLocalStorage;
-  render(myLeads);
-}
-
-const tabs = [
-  { url: "https://www.linkedin.com/in/per-harald-borgen/" }
-];
-
-// 2. Listen for clicks on tabBtn. Log Per's LinkedIn URL to the console
-tabBtn.addEventListener("click", function(){
-    console.log(tabs[0].url)
-})
+const deleteBtn = document.getElementById("delete-btn");
 
 function render(leads) {
   let listItems = "";
@@ -37,20 +32,11 @@ function render(leads) {
   ulEl.innerHTML = listItems;
 }
 
-inputBtn.addEventListener("click", function () {
-  if (inputEl.value != "") {
-    myLeads.push(inputEl.value);
-    inputEl.value = "";
-    localStorage.setItem("myLeads", JSON.stringify(myLeads));
-    render(myLeads);
-  }
-});
+deleteBtn.addEventListener("dblclick", function () {});
 
-clearBtn.addEventListener("click", function () {
-  myLeads = [];
-  localStorage.clear();
+inputBtn.addEventListener("click", function () {
+  push(referenceInDB, inputEl.value);
+  // Challenge: Import the 'push' function and modify the line above to push inputEl.value to the referenceInDB in the database
   inputEl.value = "";
-  localStorage.setItem("myLeads", JSON.stringify(myLeads));
-  render(myLeads);
 });
 
